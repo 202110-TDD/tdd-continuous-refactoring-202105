@@ -8,7 +8,7 @@ export class BudgetService {
             return 0;
         }
         if (startDay.isSame(endDay, "month")) {
-            return this.getFullMonthAmount(startDay.format("YYYYMM")) / startDay.daysInMonth() * (endDay.diff(startDay, "day") + 1);
+            return (this.getAll()?.find(element => element.yearMonth === startDay.format("YYYYMM"))?.amount || 0) / startDay.daysInMonth() * (endDay.diff(startDay, "day") + 1);
         }
         let sum = 0;
         for (let currentMonth = startDay.startOf("month");
@@ -16,17 +16,13 @@ export class BudgetService {
              currentMonth = currentMonth.add(1, "month")) {
             let month = currentMonth.format("YYYYMM");
             if (currentMonth.isSame(startDay, "month")) {
-                sum += this.getFullMonthAmount(month) / currentMonth.daysInMonth() * (startDay.endOf("month").diff(startDay, "day") + 1);
+                sum += (this.getAll()?.find(element => element.yearMonth === month)?.amount || 0) / currentMonth.daysInMonth() * (startDay.endOf("month").diff(startDay, "day") + 1);
             } else if (currentMonth.isSame(endDay, "month")) {
-                sum += this.getFullMonthAmount(month) / currentMonth.daysInMonth() * (endDay.diff(endDay.startOf("month"), "day") + 1);
+                sum += (this.getAll()?.find(element => element.yearMonth === month)?.amount || 0) / currentMonth.daysInMonth() * (endDay.diff(endDay.startOf("month"), "day") + 1);
             } else {
-                sum += this.getFullMonthAmount(month);
+                sum += this.getAll()?.find(element => element.yearMonth === month)?.amount || 0;
             }
         }
         return sum;
-    }
-
-    getFullMonthAmount(month) {
-        return this.getAll()?.find(element => element.yearMonth === month)?.amount || 0;
     }
 }
