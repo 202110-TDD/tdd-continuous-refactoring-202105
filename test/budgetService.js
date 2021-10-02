@@ -24,7 +24,7 @@ export class BudgetService {
                 if (budget.firstDay().isSame(startDay, "month")) {
                     overlappingEnd = budget.lastDay();
                     overlappingStart = startDay;
-                } else if (currentMonth.isSame(endDay, "month")) {
+                } else if (budget.lastDay().isSame(endDay, "month")) {
                     overlappingEnd = endDay;
                     overlappingStart = budget.firstDay();
                 } else {
