@@ -9,6 +9,9 @@ export class Period {
     }
 
     overlappingDays(budget) {
+        if (this.endDay.isBefore(this.startDay)) {
+            return 0;
+        }
         let overlappingEnd = budget.lastDay().isBefore(this.endDay)
             ? budget.lastDay()
             : this.endDay;
