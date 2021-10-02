@@ -15,13 +15,6 @@ export class Period {
         let overlappingStart = budget.firstDay().isAfter(this.startDay)
             ? budget.firstDay()
             : this.startDay;
-        // if (budget.firstDay().isSame(this.startDay, "month")) {
-        //     overlappingStart = this.startDay;
-        // } else if (budget.lastDay().isSame(this.endDay, "month")) {
-        //     overlappingStart = budget.firstDay();
-        // } else {
-        //     overlappingStart = budget.firstDay();
-        // }
         return overlappingEnd.diff(overlappingStart, "day") + 1;
     }
 }
