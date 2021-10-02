@@ -15,14 +15,14 @@ export class BudgetService {
              currentMonth.isBefore(endDay.add(1, 'month').startOf('month'));
              currentMonth = currentMonth.add(1, "month")) {
             let month = currentMonth.format("YYYYMM");
+            let budget = this.getAll()?.find(element => element.yearMonth === month);
             if (currentMonth.isSame(startDay, "month")) {
-                let budget = this.getAll()?.find(element => element.yearMonth === month);
                 sum += (budget?.amount || 0) / currentMonth.daysInMonth() * (startDay.endOf("month").diff(startDay, "day") + 1);
             } else if (currentMonth.isSame(endDay, "month")) {
-                let budget = this.getAll()?.find(element => element.yearMonth === month);
+                // let budget = this.getAll()?.find(element => element.yearMonth === month);
                 sum += (budget?.amount || 0) / currentMonth.daysInMonth() * (endDay.diff(endDay.startOf("month"), "day") + 1);
             } else {
-                let budget = this.getAll()?.find(element => element.yearMonth === month);
+                // let budget = this.getAll()?.find(element => element.yearMonth === month);
                 sum += budget?.amount || 0;
             }
         }
