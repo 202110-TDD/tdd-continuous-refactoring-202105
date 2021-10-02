@@ -1,16 +1,5 @@
 import dayjs from "dayjs";
-
-class Budget {
-    static from(json) {
-        if (json) { return Object.assign(new Budget(), json);}
-        return null;
-    }
-
-    totalDays() {
-        let firstDay = dayjs(this.yearMonth + "01", "yyyyMMdd");
-        return firstDay.daysInMonth();
-    }
-}
+import {Budget} from "../src/budget";
 
 export class BudgetService {
 
