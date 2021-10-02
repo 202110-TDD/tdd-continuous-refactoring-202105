@@ -12,7 +12,9 @@ export class Period {
         let overlappingEnd;
         let overlappingStart;
         if (budget.firstDay().isSame(this.startDay, "month")) {
-            overlappingEnd = budget.lastDay();
+            overlappingEnd = budget.lastDay().isBefore(this.endDay)
+                ? budget.lastDay()
+                : this.endDay;
             overlappingStart = this.startDay;
         } else if (budget.lastDay().isSame(this.endDay, "month")) {
             overlappingEnd = this.endDay;
