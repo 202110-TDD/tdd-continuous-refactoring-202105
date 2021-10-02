@@ -1,17 +1,6 @@
 import dayjs from "dayjs";
 import {Budget} from "../src/budget";
-
-class Period {
-    startDay;
-    endDay;
-
-    constructor(startDay, endDay) {
-        this.startDay = startDay;
-        this.endDay = endDay;
-
-    }
-
-}
+import {Period} from "../src/period";
 
 export class BudgetService {
 
