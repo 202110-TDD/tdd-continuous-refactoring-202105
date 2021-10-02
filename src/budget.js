@@ -6,6 +6,10 @@ export class Budget {
         return null;
     }
 
+    dailyAmount() {
+        return (this.amount) / this.totalDays();
+    }
+
     totalDays() {
         let firstDay = dayjs(this.yearMonth + "01", "yyyyMMdd");
         return firstDay.daysInMonth();
