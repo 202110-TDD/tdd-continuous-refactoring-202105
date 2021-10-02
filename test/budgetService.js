@@ -5,6 +5,11 @@ class Budget {
         if (json) { return Object.assign(new Budget(), json);}
         return null;
     }
+
+    totalDays() {
+        let firstDay = dayjs(this.yearMonth + "01", "yyyyMMdd");
+        return firstDay.daysInMonth();
+    }
 }
 
 export class BudgetService {
@@ -25,7 +30,8 @@ export class BudgetService {
             let month = currentMonth.format("YYYYMM");
             let budget = Budget.from(this.getAll()?.find(element => element.yearMonth === month));
             if (budget) {
-                let daysOfBudget = currentMonth.daysInMonth();
+                let daysOfBudget = budget.totalDays();
+                // let daysOfBudget = currentMonth.daysInMonth();
                 if (currentMonth.isSame(startDay, "month")) {
                     sum += (budget.amount) / daysOfBudget * (startDay.endOf("month").diff(startDay, "day") + 1);
                 } else if (currentMonth.isSame(endDay, "month")) {
@@ -37,4 +43,5 @@ export class BudgetService {
         }
         return sum;
     }
+
 }
