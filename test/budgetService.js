@@ -1,6 +1,18 @@
 import dayjs from "dayjs";
 import {Budget} from "../src/budget";
 
+class Period {
+    startDay;
+    endDay;
+
+    constructor(startDay, endDay) {
+        this.startDay = startDay;
+        this.endDay = endDay;
+
+    }
+
+}
+
 export class BudgetService {
 
     query(start, end) {
@@ -26,6 +38,7 @@ export class BudgetService {
     }
 
     overlappingDays(budget, startDay, endDay) {
+        let period = new Period(startDay, endDay);
         let overlappingEnd;
         let overlappingStart;
         if (budget.firstDay().isSame(startDay, "month")) {
