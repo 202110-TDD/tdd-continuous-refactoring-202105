@@ -19,23 +19,27 @@ export class BudgetService {
             let month = currentMonth.format("YYYYMM");
             let budget = Budget.from(this.getAll()?.find(element => element.yearMonth === month));
             if (budget) {
+                let overlappingDays;
+                let overlappingEnd;
+                let overlappingStart;
                 if (currentMonth.isSame(startDay, "month")) {
-                    let overlappingEnd = budget.lastDay();
-                    let overlappingStart = startDay;
-                    let overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
-                    sum += budget.dailyAmount() * overlappingDays;
+                    overlappingEnd = budget.lastDay();
+                    overlappingStart = startDay;
+                    // overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
+                    // sum += budget.dailyAmount() * overlappingDays;
                 } else if (currentMonth.isSame(endDay, "month")) {
-                    let overlappingEnd = endDay;
-                    let overlappingStart = budget.firstDay();
-                    let overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
-                    sum += budget.dailyAmount() * overlappingDays;
+                    overlappingEnd = endDay;
+                    overlappingStart = budget.firstDay();
+                    // overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
+                    // sum += budget.dailyAmount() * overlappingDays;
                 } else {
-                    let overlappingEnd = budget.lastDay();
-                    let overlappingStart = budget.firstDay();
-                    let overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
-                    sum += budget.dailyAmount() * overlappingDays;
-                    // sum += budget.amount;
+                    overlappingEnd = budget.lastDay();
+                    overlappingStart = budget.firstDay();
+                    // overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
+                    // sum += budget.dailyAmount() * overlappingDays;
                 }
+                overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
+                sum += budget.dailyAmount() * overlappingDays;
             }
         }
         return sum;
