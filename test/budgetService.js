@@ -19,23 +19,25 @@ export class BudgetService {
             let month = currentMonth.format("YYYYMM");
             let budget = Budget.from(this.getAll()?.find(element => element.yearMonth === month));
             if (budget) {
-                let overlappingEnd;
-                let overlappingStart;
-                if (budget.firstDay().isSame(startDay, "month")) {
-                    overlappingEnd = budget.lastDay();
-                    overlappingStart = startDay;
-                } else if (budget.lastDay().isSame(endDay, "month")) {
-                    overlappingEnd = endDay;
-                    overlappingStart = budget.firstDay();
-                } else {
-                    overlappingEnd = budget.lastDay();
-                    overlappingStart = budget.firstDay();
-                }
-                let overlappingDays = overlappingEnd.diff(overlappingStart, "day") + 1;
-                sum += budget.dailyAmount() * overlappingDays;
+                sum += budget.dailyAmount() * this.overlappingDays(budget, startDay, endDay);
             }
         }
         return sum;
     }
 
+    overlappingDays(budget, startDay, endDay) {
+        let overlappingEnd;
+        let overlappingStart;
+        if (budget.firstDay().isSame(startDay, "month")) {
+            overlappingEnd = budget.lastDay();
+            overlappingStart = startDay;
+        } else if (budget.lastDay().isSame(endDay, "month")) {
+            overlappingEnd = endDay;
+            overlappingStart = budget.firstDay();
+        } else {
+            overlappingEnd = budget.lastDay();
+            overlappingStart = budget.firstDay();
+        }
+        return overlappingEnd.diff(overlappingStart, "day") + 1;
+    }
 }
